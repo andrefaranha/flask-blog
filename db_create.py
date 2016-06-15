@@ -4,12 +4,12 @@ import datetime
 
 
 db.drop_all()
-db.configure_mappers()
+# db.configure_mappers()
 db.create_all()
 
 users = [
     models.User('admin', '1'),
-    models.User('andre', '2')
+    models.User('andre', '2'),
 ]
 
 for user in users:
@@ -67,6 +67,12 @@ posts = [
         'Phasellus ut sem eget elit viverra tempor. Donec varius dui eget ' +
         'arcu elementum placerat.',
         datetime.datetime.strptime("20141229050936", "%Y%m%d%H%M%S"),
+        user_1.id
+    ),
+    models.Post(
+        'Sed euismod facilisis consectetur',
+        'Etiam et diam nulla. Sed et eros tincidunt felis laoreet porttitor.',
+        datetime.datetime.strptime("20131229050936", "%Y%m%d%H%M%S"),
         user_1.id
     ),
 ]

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% for post in posts %}
+  {% for post in posts.items %}
     <p>
       <div>
         <a href="{{ url_for('post', id=post.id) }}">{{ post.title|truncate(60) }}</a></br>
@@ -10,4 +10,14 @@
       </div>
     </p>
   {% endfor %}
+  {% if posts.has_prev %}
+    <a href="{{ url_for('index', page=posts.prev_num) }}">&lt;&lt; Newer posts</a>
+  {% else %}
+    &lt;&lt; Newer posts
+  {% endif %}
+  {% if posts.has_next %}
+    <a href="{{ url_for('index', page=posts.next_num) }}">Older posts &gt;&gt;</a>
+  {% else %}
+    Older posts &gt;&gt;
+  {% endif %}
 {% endblock %}

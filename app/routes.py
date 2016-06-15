@@ -12,8 +12,11 @@ def load_user(id):
 
 
 @app.route("/")
-def index():
-    posts = models.Post.query.order_by(models.Post.datetime.desc()).all()
+@app.route("/<int:page>")
+def index(page=1):
+    posts = models.Post.query.order_by(
+        models.Post.datetime.desc()
+    ).paginate(page, 3, False)
     # from sqlalchemy_searchable import search
     # query = db.session.query(models.Post)
     # query = search(query, 'blog')

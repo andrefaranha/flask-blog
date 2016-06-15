@@ -1,10 +1,13 @@
-from app.app import db
+from app.app import app, db
 from app import models
 import datetime
 
 
 db.drop_all()
-# db.configure_mappers()
+db.get_engine(app).connect().execute(
+    'DROP FUNCTION post_search_vector_update();'
+)
+db.configure_mappers()
 db.create_all()
 
 users = [

@@ -1,9 +1,12 @@
 from . import forms
 from . import models
 from .app import app, db, lm
-import datetime
-from flask import redirect, render_template, request, url_for
+from config import POSTS_PER_PAGE
+from flask import g, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
+from sqlalchemy_searchable import search
+
+import datetime
 
 
 @lm.user_loader
@@ -11,16 +14,17 @@ def load_user(id):
     return models.User.query.get(int(id))
 
 
+@app.before_request
+def before_request():
+    g.search_form = forms.SearchForm()
+
+
 @app.route("/")
 @app.route("/<int:page>")
 def index(page=1):
     posts = models.Post.query.order_by(
         models.Post.datetime.desc()
-    ).paginate(page, 3, False)
-    # from sqlalchemy_searchable import search
-    # query = db.session.query(models.Post)
-    # query = search(query, 'blog')
-    # print query.all()
+    ).paginate(page, POSTS_PER_PAGE, False)
 
     return render_template('index.html', posts=posts)
 
@@ -68,7 +72,7 @@ def profile():
 
 @app.route('/addPost', methods=['GET', 'POST'])
 @login_required
-def addPost():
+def add_post():
     form = forms.PostForm()
     if form.validate_on_submit():
         post = models.Post(
@@ -79,10 +83,31 @@ def addPost():
         db.session.commit()
 
         return redirect(url_for('index'))
-    return render_template('addPost.html', form=form)
+    return render_template('add_post.html', form=form)
 
 
 @app.route('/post/<id>')
 def post(id):
     post = models.Post.query.get(id)
-    return render_template('post.html', post=post)
+    return render_template('show_post.html', post=post)
+
+
+@app.route('/posts/<query>')
+@app.route('/posts/<query>/<int:page>')
+def search_results(query, page=1):
+    posts = models.Post.query.order_by(
+        models.Post.datetime.desc()
+    )
+    posts = search(posts, query).paginate(page, POSTS_PER_PAGE, False)
+
+    return render_template('search_posts.html', query=query, posts=posts)
+
+
+@app.route('/search', methods=['POST'])
+def search_posts():
+    form = forms.PostForm()
+    if g.search_form.validate_on_submit():
+        return redirect(
+            url_for('search_results', query=g.search_form.search.data)
+        )
+    return redirect(url_for('index'))

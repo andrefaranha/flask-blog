@@ -23,3 +23,7 @@ class PostForm(Form):
     # datetime = DateField("Date", validators=[DataRequired()])
     # user_id = IntegerField("User Id", validators=[DataRequired()])
     submit = SubmitField("Write Post")
+
+
+class SearchForm(Form):
+    search = StringField('search', validators=[DataRequired()])

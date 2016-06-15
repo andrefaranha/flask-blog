@@ -1,7 +1,7 @@
-{% extends "base.html" %}
-
-{% block content %}
-  <h1>{{ post.title }}</h1>
-  <p>{{ post.content }}</p>
-  by: <i>{{ post.author.login }}</i> at <i>{{ post.datetime }}</i></br>
-{% endblock %}
+<p>
+  <div>
+    <a href="{{ url_for('post', id=post.id) }}">{{ post.title|truncate(60) }}</a></br>
+    {{ post.content|truncate(60) }}</br>
+    by: <i>{{ post.author.login }}</i> at <i>{{ post.datetime }}</i></br>
+  </div>
+</p>

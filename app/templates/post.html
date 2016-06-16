@@ -1,7 +1,16 @@
-<p>
-  <div>
-    <a href="{{ url_for('post', id=post.id) }}">{{ post.title|truncate(60) }}</a></br>
-    {{ post.content|truncate(60) }}</br>
-    by: <i>{{ post.author.login }}</i> at <i>{{ post.datetime }}</i></br>
+{% block head %}
+  <style type="text/css">
+    .post {
+      height: 150px;
+    }
+  </style>
+{% endblock %}
+
+<div class="post">
+  <div class="well">
+    <h2><a href="{{ url_for('post', id=post.id) }}">{{ post.title|truncate(60) }}</a></h2>
+    <p>{{ post.datetime }}</p>
+    {{ post.content|truncate(200) }}</br>
+    by: <i>{{ post.author.login }}</i>
   </div>
-</p>
+</div>

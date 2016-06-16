@@ -70,7 +70,7 @@ def profile():
     return render_template('profile.html')
 
 
-@app.route('/addPost', methods=['GET', 'POST'])
+@app.route('/add-post', methods=['GET', 'POST'])
 @login_required
 def add_post():
     form = forms.PostForm()
@@ -92,8 +92,8 @@ def post(id):
     return render_template('show_post.html', post=post)
 
 
-@app.route('/posts/<query>')
-@app.route('/posts/<query>/<int:page>')
+@app.route('/search-posts/<query>')
+@app.route('/search-posts/<query>/<int:page>')
 def search_results(query, page=1):
     posts = models.Post.query.order_by(
         models.Post.datetime.desc()

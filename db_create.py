@@ -78,6 +78,54 @@ posts = [
         datetime.datetime.strptime("20131229050936", "%Y%m%d%H%M%S"),
         user_1.id
     ),
+    models.Post(
+        'Third Post', 'This is the third post of this blog. Etiam et diam ' +
+        'nulla. Sed et eros tincidunt felis laoreet porttitor.',
+        datetime.datetime.strptime("20161001050936", "%Y%m%d%H%M%S"),
+        user_1.id
+    ),
+    models.Post(
+        'Fourth Post', 'This is the fourth post of this blog. Etiam et diam ' +
+        'nulla. Sed et eros tincidunt felis laoreet porttitor.',
+        datetime.datetime.strptime("20161001050936", "%Y%m%d%H%M%S"),
+        user_1.id
+    ),
+    models.Post(
+        'Fifth Post', 'This is the fifth post of this blog. Etiam et diam ' +
+        'nulla. Sed et eros tincidunt felis laoreet porttitor.',
+        datetime.datetime.strptime("20161001050936", "%Y%m%d%H%M%S"),
+        user_1.id
+    ),
+    models.Post(
+        'Sixth Post', 'This is the sixth post of this blog. Etiam et diam ' +
+        'nulla. Sed et eros tincidunt felis laoreet porttitor.',
+        datetime.datetime.strptime("20161001050936", "%Y%m%d%H%M%S"),
+        user_1.id
+    ),
+    models.Post(
+        'Seventh Post', 'This is the seventh post of this blog. Etiam et ' +
+        'diam nulla. Sed et eros tincidunt felis laoreet porttitor.',
+        datetime.datetime.strptime("20161001050936", "%Y%m%d%H%M%S"),
+        user_1.id
+    ),
+    models.Post(
+        'Eighth Post', 'This is the eighth post of this blog. Etiam et diam ' +
+        'nulla. Sed et eros tincidunt felis laoreet porttitor.',
+        datetime.datetime.strptime("20161001050936", "%Y%m%d%H%M%S"),
+        user_1.id
+    ),
+    models.Post(
+        'Ninth Post', 'This is the ninth post of this blog. Etiam et diam ' +
+        'nulla. Sed et eros tincidunt felis laoreet porttitor.',
+        datetime.datetime.strptime("20161001050936", "%Y%m%d%H%M%S"),
+        user_1.id
+    ),
+    models.Post(
+        'Tenth Post', 'This is the tenth post of this blog. Etiam et diam ' +
+        'nulla. Sed et eros tincidunt felis laoreet porttitor.',
+        datetime.datetime.strptime("20161001050936", "%Y%m%d%H%M%S"),
+        user_1.id
+    ),
 ]
 
 for post in posts:

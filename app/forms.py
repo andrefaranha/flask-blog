@@ -20,9 +20,12 @@ class LoginForm(Form):
 class PostForm(Form):
     title = StringField("Title", validators=[DataRequired()])
     content = TextAreaField("Content", validators=[DataRequired()])
-    # datetime = DateField("Date", validators=[DataRequired()])
-    # user_id = IntegerField("User Id", validators=[DataRequired()])
-    submit = SubmitField("Write Post")
+    submit = SubmitField("Submit")
+
+
+class TagForm(Form):
+    name = StringField("Name", validators=[DataRequired()])
+    submit = SubmitField("Submit")
 
 
 class SearchForm(Form):

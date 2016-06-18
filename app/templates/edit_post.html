@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="write-post">
+    <form method="post">
+      {{ form.hidden_tag() }}
+      {{ form.title(placeholder='Post Title') }}</br>
+      {{ form.content(placeholder='Post Content') }}</br>
+      {{ form.submit }}
+    </form>
+  </div>
+{% endblock %}

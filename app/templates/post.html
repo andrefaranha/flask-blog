@@ -1,16 +1,48 @@
-{% block head %}
-  <style type="text/css">
-    .post {
-      height: 150px;
-    }
-  </style>
-{% endblock %}
-
 <div class="post">
-  <div class="well">
-    <h2><a href="{{ url_for('post', id=post.id) }}">{{ post.title|truncate(60) }}</a></h2>
-    <p>{{ post.datetime }}</p>
-    {{ post.content|truncate(200) }}</br>
-    by: <i>{{ post.author.login }}</i>
+  <div class="header">
+    <div class="date"><p>{{ post.datetime.strftime('%B %d, %Y, %I:%M%p') }}</p></div>
+    <div class="options">
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('edit_post', id=post.id) }}"><span class="icon-pencil"></span>Edit</a>
+        <a href="{{ url_for('delete_post', id=post.id) }}"><span class="icon-remove"></span>Delete</a>
+      {% endif %}
+    </div>
+    <div class="title">
+      <h1><a href="{{ url_for('post', id=post.id) }}">{{ post.title|truncate(35) }}</a></h1>
+    </div>
+
   </div>
+
+  <div class="tags">
+    <div class="btn-toolbar">
+      {% for tag in post.tags %}
+        <div class="btn-group">
+          <a class="btn" href="{{ url_for('search_by_tag', id=tag.id) }}">{{ tag.name }}</a>
+          {% if current_user.is_authenticated %}
+            <a class="btn" href="{{ url_for('remove_tag_from_post', tag_id=tag.id, post_id=post.id)}}">
+              <i class="icon-remove"></i>
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <p>{{ post.content|truncate(1000)|safe }}</p>
+  by: <i>{{ post.author.name }}</i>
+
+  {% if current_user.is_authenticated %}
+    <div class="tags">
+      <div class="btn-toolbar">
+        {% for tag in g.tags %}
+          {% if tag not in post.tags %}
+            <div class="btn-group">
+              <a class="btn" href="{{ url_for('add_tag_to_post', tag_id=tag.id, post_id=post.id)}}">{{ tag.name }}</a>
+              <a class="btn" href="{{ url_for('add_tag_to_post', tag_id=tag.id, post_id=post.id)}}"><i class="icon-plus"></i></a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
 </div>

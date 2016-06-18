@@ -7,15 +7,31 @@ from werkzeug import generate_password_hash, check_password_hash
 make_searchable()
 
 
+posts_tags_relationship_table = db.Table(
+    'posts_tags_relationship_table',
+    db.Column(
+        'post_id', db.Integer, db.ForeignKey('post.id', ondelete='CASCADE'),
+        nullable=False,
+    ),
+    db.Column(
+        'tag_id', db.Integer, db.ForeignKey('tag.id', ondelete='CASCADE'),
+        nullable=False,
+    ),
+    db.PrimaryKeyConstraint('post_id', 'tag_id')
+)
+
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.String(60), unique=True, nullable=False)
     password_hash = db.Column(db.String(120), nullable=False)
+    name = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author')
 
-    def __init__(self, login, password):
+    def __init__(self, login, password, name):
         self.login = login
         self.set_password(password)
+        self.name = name
 
     @property
     def is_authenticated(self):
@@ -48,6 +64,9 @@ class Post(db.Model):
     content = db.Column(db.Unicode, nullable=False)
     datetime = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    tags = db.relationship(
+        'Tag', secondary=posts_tags_relationship_table, backref='posts'
+    )
     search_vector = db.Column(TSVectorType('title', 'content'))
 
     def __init__(self, title, content, datetime, user_id):
@@ -58,3 +77,14 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post "%r">' % (self.title)
+
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), unique=True, nullable=False)
+
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return '<Tag "%r">' % (self.name)

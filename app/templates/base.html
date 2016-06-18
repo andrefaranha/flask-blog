@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Flask Prototype Blog</title>
+    <title>Portfolio Blog</title>
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/blog.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/jquery-1.12.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-dropdown.js') }}"></script>
     <style type="text/css">
       body {
         padding-top: 60px;
         padding-bottom: 40px;
+        background: #f6f7f9;
       }
     </style>
     {% block head %}{% endblock %}
@@ -17,8 +21,9 @@
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="brand" href="{{ url_for('index') }}">
-            Flask Blog
+            Portfolio Blog
           </a>
+
           <ul class="nav">
             <form action="{{ url_for('search_posts') }}" method="post" class="navbar-search pull-left">
               {{ g.search_form.hidden_tag() }}
@@ -29,9 +34,12 @@
           {% if current_user.is_authenticated %}
             <ul class="nav pull-right">
               <li class="divider-vertical"></li>
+              <li><a href="{{ url_for('index') }}">Home</a></li>
+              <li><a href="{{ url_for('manage_tags') }}">Manage Tags</a></li>
+              <li class="divider-vertical"></li>
               <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             </ul>
-            <p class="navbar-text pull-right">Logged in as <a href="{{ url_for('profile') }}">{{ current_user.login }}</a></p>
+            <p class="navbar-text pull-right">Logged in as <i>{{ current_user.login }}</i></p>
           {% else %}
             <ul class="nav navbar-nav pull-right">
               <li><a href="{{ url_for('login') }}"><i class="icon-user icon-white"></i> Login</a></li>
@@ -42,38 +50,14 @@
       </div>
     </div>
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span2"></br></div>
-        {% if current_user.is_authenticated %}
-          <div class="span2">
-            <div class="well sidebar-nav">
-              <ul class="nav nav-list">
-                <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li class="nav-header">{{ current_user.login }}</li>
-                <li><a href="{{ url_for('profile') }}">Profile</a></li>
-                <li class="nav-header">Posts</li>
-                <li><a href="{{ url_for('add_post') }}">Write a Post</a></li>
-                <li><a href="#">Manage Posts</a></li>
-                <li class="nav-header">Users</li>
-                <li><a href="#">Manage Users</a></li>
-                <li class="nav-header">Tags</li>
-                <li><a href="#">Manage Tags</a></li>
-              </ul>
-            </div>
-          </div>
-        {% endif %}
-        {% if current_user.is_authenticated %}
-          <div class="span6">
-        {% else %}
-          <div class="span8">
-        {% endif %}
-          <div class="">
-            {% block content %}
-            {% endblock %}
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          {% block content %}
+          {% endblock %}
         </div>
       </div>
     </div>
+
   </body>
 </html>

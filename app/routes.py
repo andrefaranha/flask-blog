@@ -56,8 +56,10 @@ def index(page=1):
 @app.route("/tag/<id>")
 @app.route("/tag/<id>/<int:page>")
 def search_by_tag(id, page=1):
-    posts = models.Post.query.filter(
-        models.Tag.id.in_([id])
+    posts = models.Post.query.join(
+        models.Post.tags
+    ).filter_by(
+        id=id
     ).order_by(
         models.Post.datetime.desc()
     ).paginate(page, POSTS_PER_PAGE, False)

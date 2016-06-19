@@ -55,7 +55,7 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return '<User %r>' % (self.nickname)
+        return '<User %r: %r>' % (self.login, self.name)
 
 
 class Post(db.Model):

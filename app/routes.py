@@ -63,7 +63,7 @@ def index(page=1):
         models.Post.datetime.desc()
     ).paginate(page, POSTS_PER_PAGE, False)
 
-    if page > posts.pages:
+    if posts.pages > 0 and page > posts.pages:
         abort(404)
 
     return render_template('index.html', posts=posts)
@@ -83,6 +83,8 @@ def search_by_tag(id, page=1):
         models.Post.datetime.desc()
     ).paginate(page, POSTS_PER_PAGE, False)
 
+    if posts.pages < 1:
+        return render_template('no_elements_found.html')
     if page > posts.pages:
         abort(404)
 
@@ -100,6 +102,8 @@ def search_results(query, page=1):
     )
     posts = search(posts, query).paginate(page, POSTS_PER_PAGE, False)
 
+    if posts.pages < 1:
+        return render_template('no_elements_found.html')
     if page > posts.pages:
         abort(404)
 
@@ -145,7 +149,7 @@ def edit_post(id):
     return render_template('post_form.html', form=form)
 
 
-@app.route('/delete_post/<int:id>', methods=['GET', 'POST'])
+@app.route('/delete_post/<int:id>')
 @login_required
 def delete_post(id):
     post = models.Post.query.filter_by(id=id).delete()

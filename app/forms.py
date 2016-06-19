@@ -14,7 +14,7 @@ class LoginForm(Form):
     login = StringField("Login", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
     remember_me = BooleanField('Remember Me', default=False)
-    submit = SubmitField("Login")
+    submit = SubmitField("Log in")
 
 
 class PostForm(Form):

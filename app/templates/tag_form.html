@@ -1,11 +1,14 @@
-{% extends "base.html" %}
+{% extends "layout.html" %}
 
 {% block content %}
-  <div class="write-post">
+  <div class="post-form">
     <form method="post">
       {{ form.hidden_tag() }}
-      {{ form.name(placeholder='Tag Name') }}
-      {{ form.submit }}
+
+      <div class="control-group {% if form.name.errors %}error{% endif %}">
+        {{ form.name(placeholder='Tag Name') }}
+      </div>
+      {{ form.submit(class="btn btn-primary") }}
     </form>
   </div>
 {% endblock %}

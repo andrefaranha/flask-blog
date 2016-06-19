@@ -37,8 +37,8 @@
         {% for tag in g.tags %}
           {% if tag not in post.tags %}
             <div class="btn-group">
-              <a class="btn" href="{{ url_for('add_tag_to_post', tag_id=tag.id, post_id=post.id)}}">{{ tag.name }}</a>
-              <a class="btn" href="{{ url_for('add_tag_to_post', tag_id=tag.id, post_id=post.id)}}"><i class="icon-plus"></i></a>
+              <a class="btn" href="{{ url_for('search_by_tag', id=tag.id) }}">{{ tag.name }}</a>
+              <a class="btn" href="{{ url_for('add_tag_to_post', tag_id=tag.id, post_id=post.id) }}"><i class="icon-plus"></i></a>
             </div>
           {% endif %}
         {% endfor %}

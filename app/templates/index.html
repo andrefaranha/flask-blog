@@ -1,14 +1,14 @@
-{% extends "base.html" %}
+{% extends "layout.html" %}
 
 {% block content %}
 
   {% if current_user.is_authenticated %}
-    <div class="write-post">
+    <div class="post-form">
       <form action="{{ url_for('write_post') }}" method="post">
         {{ g.post_form.hidden_tag() }}
         {{ g.post_form.title(placeholder='Post Title') }}</br>
         {{ g.post_form.content(placeholder='Post Content') }}</br>
-        {{ g.post_form.submit }}
+        {{ g.post_form.submit(class="btn btn-primary") }}
       </form>
     </div>
   {% endif %}
